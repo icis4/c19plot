@@ -23,7 +23,7 @@ url = r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/"
 response = request.urlopen(url)
 data = json.loads(response.read())['records']
 
-for i, country in enumerate(['BG','RU', 'US']):
+for i, country in enumerate(['BG']): #,'RU', 'US'
     country_data = list(filter(lambda x: x['geoId'] == country, data))
     result = list(map(lambda x: (datetime.date(*list(reversed(list( \
         map(int, x['dateRep'].split("/")))))), int(x['cases']), \
@@ -36,15 +36,22 @@ for i, country in enumerate(['BG','RU', 'US']):
     popd = np.flip(np.array(list(map(lambda x: x[3], result)), dtype='d'))
 
     ax1.plot(dateRep, cases/popd * 1.0e+6, label = country)
+    z = np.polyfit(range(len(dateRep)) , cases/popd * 1.0e+6, 6)
+    p = np.poly1d(z)
+    ax1.plot(dateRep, p(range(len(dateRep))), "--")
+
     ax2.plot(dateRep, deaths/popd * 1.0e+6, label = country)
+    z = np.polyfit(range(len(dateRep)) , deaths/popd * 1.0e+6, 6)
+    p = np.poly1d(z)
+    ax2.plot(dateRep, p(range(len(dateRep))), "--")
 
 ax1.set_title(r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/")
 ax1.legend()
 ax1.grid()
-ax1.ylabel = 'cases per million'
+ax1.set_ylabel('cases per million')
 
 ax2.legend()
 ax2.grid()
-ax2.ylabel = 'deaths per million'
+ax2.set_ylabel('deaths per million')
 
 plt.show()
