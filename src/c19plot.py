@@ -15,15 +15,22 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.style.use('bmh')
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex = True)
 fig.subplots_adjust(left = 0.05, right = 0.95, top = 0.95, bottom = 0.05,\
     wspace = 0)
+ax1.set_title(\
+    r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/")
+ax1.grid(color='#333333')
+ax1.set_ylabel('cases per million')
+ax2.grid(color='#333333')
+ax2.set_ylabel('deaths per million')
 
 url = r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/"
 response = request.urlopen(url)
 data = json.loads(response.read())['records']
 
-for i, country in enumerate(['BG']): #,'RU', 'US'
+for i, country in enumerate(['BG', 'US', 'RU',]):
     country_data = list(filter(lambda x: x['geoId'] == country, data))
     result = list(map(lambda x: (datetime.date(*list(reversed(list( \
         map(int, x['dateRep'].split("/")))))), int(x['cases']), \
@@ -35,23 +42,18 @@ for i, country in enumerate(['BG']): #,'RU', 'US'
     deaths = np.flip(np.array(list(map(lambda x: x[2], result)), dtype='d'))
     popd = np.flip(np.array(list(map(lambda x: x[3], result)), dtype='d'))
 
-    ax1.plot(dateRep, cases/popd * 1.0e+6, label = country)
+    ax1.plot(dateRep, cases/popd * 1.0e+6, '-', color ='C%d' % i, \
+        label = country)
     z = np.polyfit(range(len(dateRep)) , cases/popd * 1.0e+6, 6)
     p = np.poly1d(z)
-    ax1.plot(dateRep, p(range(len(dateRep))), "--")
+    ax1.plot(dateRep, p(range(len(dateRep))), "--", color ='C%d' % i)
 
-    ax2.plot(dateRep, deaths/popd * 1.0e+6, label = country)
+    ax2.plot(dateRep, deaths/popd * 1.0e+6, '-', color ='C%d' % i,\
+        label = country)
     z = np.polyfit(range(len(dateRep)) , deaths/popd * 1.0e+6, 6)
     p = np.poly1d(z)
-    ax2.plot(dateRep, p(range(len(dateRep))), "--")
+    ax2.plot(dateRep, p(range(len(dateRep))), '--', color ='C%d' % i)
 
-ax1.set_title(r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/")
 ax1.legend()
-ax1.grid()
-ax1.set_ylabel('cases per million')
-
 ax2.legend()
-ax2.grid()
-ax2.set_ylabel('deaths per million')
-
 plt.show()

@@ -2,6 +2,9 @@
 Python, Plot data from https://opendata.ecdc.europa.eu/covid19/casedistribution/json/
 
 
+### Result 2020-07-11
+![Result 2020-07-11](img/plot-2020-07-11.png)
+
 ### Result 2020-07-09
 ![Result 2020-07-06](img/plot-2020-07-09.png)
 
