@@ -66,9 +66,9 @@ plt.savefig(
             os.path.dirname(__file__),
             "..",
             "img",
-            time.strftime("plot-%Y-%m-%d.svg")
+            time.strftime("plot-%Y-%m-%d.png")
         )
     ),
-    format="svg"
+    format="png"
 )
 #plt.show()

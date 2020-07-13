@@ -3,7 +3,7 @@ Python, Plot data from https://opendata.ecdc.europa.eu/covid19/casedistribution/
 
 
 ### Result 2020-07-13
-![Result 2020-07-13](img/plot-2020-07-13.svg)
+![Result 2020-07-13](img/plot-2020-07-13.png)
 
 ### Result 2020-07-12
 ![Result 2020-07-12](img/plot-2020-07-12.png)
