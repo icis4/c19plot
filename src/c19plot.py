@@ -21,7 +21,7 @@ plt.style.use('bmh')
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex = True)
 fig.subplots_adjust(left = 0.10, right = 0.90, top = 0.90, bottom = 0.10,\
     wspace = 0)
-fig.set_size_inches(10,8)
+fig.set_size_inches(14,8)
 
 ax1.set_title(\
     r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/")
@@ -34,7 +34,7 @@ url = r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/"
 response = request.urlopen(url)
 data = json.loads(response.read())['records']
 
-for i, country in enumerate(['BG', 'US', 'RU',]):
+for i, country in enumerate(['BG','US', 'RU',]): #
     country_data = list(filter(lambda x: x['geoId'] == country, data))
     result = list(map(lambda x: (datetime.date(*list(reversed(list( \
         map(int, x['dateRep'].split("/")))))), int(x['cases']), \
