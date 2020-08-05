@@ -21,7 +21,7 @@ url = r"https://opendata.ecdc.europa.eu/covid19/casedistribution/json/"
 response = request.urlopen(url)
 data = json.loads(response.read())['records']
 
-for countries in [['BG','US', 'RU',], ['BG',]]:
+for countries in [['BG','US', 'RU',], ['BG','US',], ['BG',]]:
     plt.style.use('bmh')
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex = True)
     fig.subplots_adjust(left = 0.10, right = 0.90, top = 0.90, bottom = 0.10,\
